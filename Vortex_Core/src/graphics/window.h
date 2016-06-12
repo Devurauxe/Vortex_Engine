@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 
 #include "ShaderManager.h"
+#include "ShapeData.h"
+#include "Sprite.h"
 
 namespace vortex { namespace graphics {
 	class Window
@@ -31,6 +33,7 @@ namespace vortex { namespace graphics {
 	private:
 		bool init();
 		void initShaders();
+		void sendDataToOpenGL();
 	};
 } }
 

@@ -1,68 +1,36 @@
 #include "Sprite.h"
 
+#include <iostream>
 
-
-Sprite::Sprite()
+ShapeData Sprite::drawTriangle()
 {
-	_vboID = 0;
-}
+	ShapeData tri;
 
+	Vertex vertices[3];
 
-Sprite::~Sprite()
-{
-	if (_vboID != 0)
-		glDeleteBuffers(1, &_vboID);
-}
+	vertices[0].vertexPos.position.vec4(1.0f, -1.0f, 0.0f, 1.0f);
+	vertices[0].color.rgba(255, 0, 0, 255);
 
-void Sprite::init(float x, float y, float width, float height)
-{
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
+	vertices[1].vertexPos.position.vec4(-1.0f, -1.0f, 0.0f, 1.0f);
+	vertices[1].color.rgba(255, 0, 0, 255);
 
-	if (_vboID == 0)
-		glGenBuffers(1, &_vboID);
+	vertices[2].vertexPos.position.vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	vertices[2].color.rgba(255, 0, 0, 255);
 
-	float vertexData[12];
+	GLuint vertexBufferID;
+	glGenBuffers(1, &vertexBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// First Triangle
-	vertexData[0] = x + width;
-	vertexData[1] = y + height;
+	GLushort indeces[] = { 0, 1, 2 };
+	GLuint indexArrayBufferID;
+	glGenBuffers(1, &indexArrayBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexArrayBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 
-	vertexData[2] = x;
-	vertexData[3] = y + height;
-
-	vertexData[4] = x;
-	vertexData[5] = y;
-
-	// Second Triangle
-	vertexData[6] = x;
-	vertexData[7] = y;
-
-	vertexData[8] = x + width;
-	vertexData[9] = y;
-
-	vertexData[10] = x + width;
-	vertexData[11] = y + height;
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	return tri;
 }
 
 void Sprite::draw()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glDisableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

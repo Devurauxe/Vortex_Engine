@@ -31,6 +31,17 @@ namespace vortex { namespace graphics {
 		_colorProgram.linkShaders();
 	}
 
+	void Window::sendDataToOpenGL()
+	{
+		ShapeData tri = Sprite::drawTriangle();
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (char*)(sizeof(float) * 4));
+	}
+
 	bool Window::init()
 	{
 		if (!glfwInit())
@@ -56,6 +67,7 @@ namespace vortex { namespace graphics {
 			std::cout << "Could not initialize GLEW!" << std::endl;
 		}
 
+		sendDataToOpenGL();
 		initShaders();
 
 		return true;

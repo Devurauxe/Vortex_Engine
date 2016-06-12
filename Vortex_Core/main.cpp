@@ -8,14 +8,13 @@ int main()
 
 	Window window("Vortex Engine", 800, 600);
 	Sprite _sprite;
-	_sprite.init(-1.0f, -1.0f, 1.0f, 1.0f);
 
 	while (!window.closed())
 	{
 		window.clear();
 		window.getProgram().use();
 
-		_sprite.draw();
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
 
 		window.getProgram().unuse();
 		window.update();

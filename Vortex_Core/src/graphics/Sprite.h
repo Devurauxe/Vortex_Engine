@@ -1,22 +1,14 @@
 #pragma once
 
+#include "ShapeData.h"
+
 #include <GL/glew.h>
 
 class Sprite
 {
 public:
-	Sprite();
-	~Sprite();
-
-	void init(float x, float y, float width, float height);
-
+	static ShapeData drawTriangle();
+	static ShapeData drawCube();
 	void draw();
-
-private:
-	float _x;
-	float _y;
-	float _width;
-	float _height;
-	GLuint _vboID;
 };
 
